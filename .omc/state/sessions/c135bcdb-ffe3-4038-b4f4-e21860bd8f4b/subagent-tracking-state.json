@@ -17,10 +17,19 @@
       "status": "completed",
       "completed_at": "2026-07-09T16:26:05.036Z",
       "duration_ms": 69514
+    },
+    {
+      "agent_id": "astock-agent-10a1535be3649a83",
+      "agent_type": "stock-agent",
+      "started_at": "2026-07-09T16:43:38.572Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-07-09T16:44:20.968Z",
+      "duration_ms": 42396
     }
   ],
-  "total_spawned": 3,
-  "total_completed": 3,
+  "total_spawned": 4,
+  "total_completed": 4,
   "total_failed": 0,
-  "last_updated": "2026-07-09T16:26:38.226Z"
+  "last_updated": "2026-07-09T16:44:21.168Z"
 }

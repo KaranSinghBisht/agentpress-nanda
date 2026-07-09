@@ -26,7 +26,7 @@ export interface ScoreResult {
 const TIPS: Record<string, string> = {
   sourceCount: "Cite 3 or more source URLs for full credit.",
   sourceQuality:
-    "Cite primary sources (github.com, arxiv.org, vendor blogs) — they score higher than aggregators.",
+    "Each reputable primary-source domain (github.com, arxiv.org, vendor sites) adds 5 points up to 15 — add another to close the gap.",
   headline: "Keep the headline under 140 characters.",
   bodyDepth: "Write at least 50 words of body — explain why this matters to agents.",
   tags: "Use 3 to 7 tags.",
