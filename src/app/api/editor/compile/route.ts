@@ -1,5 +1,5 @@
 import { runEditorialCycle } from "@/lib/editor";
-import { fail, json, preflight } from "@/lib/http";
+import { fail, json, preflight, withErrors } from "@/lib/http";
 
 export const OPTIONS = preflight;
 
@@ -26,11 +26,7 @@ async function run(req: Request) {
   return json({ ok: true, ...outcome });
 }
 
-/** Vercel cron invokes GET; manual triggers may POST. Both run one cycle. */
-export async function GET(req: Request) {
-  return run(req);
-}
+/** The scheduler and manual triggers may use GET or POST; both run one cycle. */
+export const GET = withErrors(async (req: Request) => run(req));
 
-export async function POST(req: Request) {
-  return run(req);
-}
+export const POST = withErrors(async (req: Request) => run(req));

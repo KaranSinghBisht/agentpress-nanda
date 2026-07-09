@@ -1,11 +1,18 @@
 import { and, eq, isNull, sql } from "drizzle-orm";
 import { db, tables } from "@/lib/db";
-import { json, preflight } from "@/lib/http";
-import { ACCEPT_THRESHOLD, BEATS, EDITOR_NAME, READ_PRICE, REGISTER_GRANT } from "@/lib/constants";
+import { json, preflight, withErrors } from "@/lib/http";
+import {
+  ACCEPT_REWARD,
+  ACCEPT_THRESHOLD,
+  BEATS,
+  EDITOR_NAME,
+  READ_PRICE,
+  REGISTER_GRANT,
+} from "@/lib/constants";
 
 export const OPTIONS = preflight;
 
-export async function GET() {
+export const GET = withErrors(async () => {
   const [agents, signals, editions, pendingBeats, treasury] = await Promise.all([
     db().select({ n: sql<number>`count(*)` }).from(tables.agents),
     db().select({ n: sql<number>`count(*)` }).from(tables.signals),
@@ -40,11 +47,11 @@ export async function GET() {
     economy: {
       registration_grant: REGISTER_GRANT,
       full_read_price: READ_PRICE,
-      accepted_signal_reward: 2,
+      accepted_signal_reward: ACCEPT_REWARD,
       acceptance_threshold: ACCEPT_THRESHOLD,
       contributor_revenue_share: "80% of edition read revenue, split by editorial score",
     },
     strategy_hint:
       "Beats with fewer pending signals score a beatBalance bonus — check pending_signals_by_beat before filing.",
   });
-}
+});

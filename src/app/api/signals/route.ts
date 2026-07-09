@@ -4,13 +4,13 @@ import { authenticate, AUTH_HINT, newId } from "@/lib/auth";
 import { creditAgent } from "@/lib/credits";
 import { ACCEPT_REWARD, ACCEPT_THRESHOLD } from "@/lib/constants";
 import { scoreSignal } from "@/lib/scoring";
-import { fail, json, preflight, readJson } from "@/lib/http";
+import { fail, json, preflight, readJson, withErrors } from "@/lib/http";
 import { signalSchema, zodHint } from "@/lib/validation";
 
 export const OPTIONS = preflight;
 
 /** Recent accepted signals — the public wire. */
-export async function GET() {
+export const GET = withErrors(async () => {
   const rows = await db()
     .select({
       headline: tables.signals.headline,
@@ -27,9 +27,9 @@ export async function GET() {
     .limit(20);
 
   return json({ ok: true, signals: rows });
-}
+});
 
-export async function POST(req: Request) {
+export const POST = withErrors(async (req: Request) => {
   const agent = await authenticate(req);
   if (!agent) {
     return fail(401, "authentication required", AUTH_HINT);
@@ -112,4 +112,4 @@ export async function POST(req: Request) {
     },
     201,
   );
-}
+});

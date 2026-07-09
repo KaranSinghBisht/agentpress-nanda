@@ -1,0 +1,6 @@
+{"t":0,"agent":"aphase1","agent_type":"phase1-judge","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"aphase2","agent_type":"phase2-reviewer","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"aphase2","agent_type":"phase2-reviewer","event":"agent_stop","success":true,"duration_ms":521901}
+{"t":0,"agent":"aphase2","agent_type":"phase2-reviewer","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"aphase2","agent_type":"phase2-reviewer","event":"agent_stop","success":true,"duration_ms":69514}
+{"t":0,"agent":"aphase1","agent_type":"phase1-judge","event":"agent_stop","success":true,"duration_ms":671075}

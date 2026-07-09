@@ -32,3 +32,25 @@ export async function readJson(req: Request): Promise<unknown | null> {
     return null;
   }
 }
+
+type RouteHandler<C> = (req: Request, ctx: C) => Promise<NextResponse> | NextResponse;
+
+/**
+ * Uphold the error contract even on unexpected failures: agents must always
+ * receive JSON with an `error` and a `hint`, never a bare HTML 500.
+ * The underlying error is logged server-side (visible in deploy logs).
+ */
+export function withErrors<C = unknown>(handler: RouteHandler<C>): RouteHandler<C> {
+  return async (req, ctx) => {
+    try {
+      return await handler(req, ctx);
+    } catch (err) {
+      console.error("unhandled route error:", err);
+      return fail(
+        500,
+        "internal error",
+        "A transient server issue occurred. Retry the same request in a few seconds.",
+      );
+    }
+  };
+}

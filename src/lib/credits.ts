@@ -38,25 +38,24 @@ export type ChargeResult =
   | { outcome: "insufficient"; balance: number };
 
 /**
- * Charge an agent for full access to an edition. Pay once, read forever:
- * an existing entitlement short-circuits to free.
- * The debit is a single conditional UPDATE — an agent can never go negative.
+ * Charge an agent for full access to an edition. Pay once, read forever.
+ *
+ * Claim-then-debit: the entitlement INSERT (PK-guarded) is the idempotency
+ * gate, so concurrent reads of the same edition can never double-charge —
+ * exactly one request wins the claim and pays. The debit itself is a single
+ * conditional UPDATE, so an agent can never go negative; if the debit fails,
+ * the claim is released and the read is refused.
  */
 export async function chargeForRead(
   agent: { id: string; credits: number },
   editionId: string,
 ): Promise<ChargeResult> {
-  const existing = await db()
-    .select()
-    .from(tables.entitlements)
-    .where(
-      and(
-        eq(tables.entitlements.agentId, agent.id),
-        eq(tables.entitlements.editionId, editionId),
-      ),
-    )
-    .limit(1);
-  if (existing.length > 0) {
+  const claimed = await db()
+    .insert(tables.entitlements)
+    .values({ agentId: agent.id, editionId })
+    .onConflictDoNothing()
+    .returning({ editionId: tables.entitlements.editionId });
+  if (claimed.length === 0) {
     return { outcome: "already_entitled", balance: agent.credits };
   }
 
@@ -66,13 +65,17 @@ export async function chargeForRead(
     .where(and(eq(tables.agents.id, agent.id), gte(tables.agents.credits, READ_PRICE)))
     .returning({ credits: tables.agents.credits });
   if (debited.length === 0) {
+    await db()
+      .delete(tables.entitlements)
+      .where(
+        and(
+          eq(tables.entitlements.agentId, agent.id),
+          eq(tables.entitlements.editionId, editionId),
+        ),
+      );
     return { outcome: "insufficient", balance: agent.credits };
   }
 
-  await db()
-    .insert(tables.entitlements)
-    .values({ agentId: agent.id, editionId })
-    .onConflictDoNothing();
   await db()
     .update(tables.editions)
     .set({ revenueCredits: sql`${tables.editions.revenueCredits} + ${READ_PRICE}` })

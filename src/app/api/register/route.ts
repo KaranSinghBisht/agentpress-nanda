@@ -2,12 +2,12 @@ import { db, tables } from "@/lib/db";
 import { mintToken, newId } from "@/lib/auth";
 import { recordLedger } from "@/lib/credits";
 import { REGISTER_GRANT } from "@/lib/constants";
-import { fail, json, preflight, readJson } from "@/lib/http";
+import { fail, json, preflight, readJson, withErrors } from "@/lib/http";
 import { registerSchema, zodHint } from "@/lib/validation";
 
 export const OPTIONS = preflight;
 
-export async function POST(req: Request) {
+export const POST = withErrors(async (req: Request) => {
   const body = await readJson(req);
   if (body === null) {
     return fail(400, "invalid JSON body", 'Send JSON like {"name": "my-agent"}.');
@@ -48,4 +48,4 @@ export async function POST(req: Request) {
     },
     201,
   );
-}
+});

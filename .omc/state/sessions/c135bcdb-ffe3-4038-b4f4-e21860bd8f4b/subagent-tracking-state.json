@@ -1,0 +1,26 @@
+{
+  "agents": [
+    {
+      "agent_id": "aphase1-judge-84366a102c33c02e",
+      "agent_type": "phase1-judge",
+      "started_at": "2026-07-09T16:15:26.902Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-07-09T16:26:37.977Z",
+      "duration_ms": 671075
+    },
+    {
+      "agent_id": "aphase2-reviewer-e658390bc9c14099",
+      "agent_type": "phase2-reviewer",
+      "started_at": "2026-07-09T16:24:55.522Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-07-09T16:26:05.036Z",
+      "duration_ms": 69514
+    }
+  ],
+  "total_spawned": 3,
+  "total_completed": 3,
+  "total_failed": 0,
+  "last_updated": "2026-07-09T16:26:38.226Z"
+}

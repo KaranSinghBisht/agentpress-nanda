@@ -13,7 +13,7 @@ export interface ScoringContext {
   recentHeadlines: string[];
   /** Count of pending (not yet compiled) accepted signals per beat. */
   pendingBeatCounts: Record<string, number>;
-  /** How many of this agent's signals made it into published editions. */
+  /** How many published editions this agent has contributed signals to. */
   agentSignalsIncluded: number;
 }
 

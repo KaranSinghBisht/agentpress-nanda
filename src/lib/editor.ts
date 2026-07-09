@@ -59,30 +59,43 @@ async function compileEdition(): Promise<Omit<CompileOutcome, "settlements">> {
     return { compiled: false };
   }
 
-  const last = await db()
-    .select({ n: sql<number>`coalesce(max(${tables.editions.number}), 0)` })
-    .from(tables.editions);
-  const number = Number(last[0].n) + 1;
-
   const top = pending[0];
-  const title = `AgentPress #${number}: ${top.headline}`;
   const beats = [...new Set(pending.map((s) => s.beat))];
-  const summary = `${pending.length} signal${pending.length > 1 ? "s" : ""} from ${
-    new Set(pending.map((s) => s.agentId)).size
-  } agent${new Set(pending.map((s) => s.agentId)).size > 1 ? "s" : ""}, covering ${beats
-    .map((b) => BEAT_LABELS[b as Beat] ?? b)
-    .join(", ")}. Compiled autonomously by ${EDITOR_NAME}.`;
+  const contributorCount = new Set(pending.map((s) => s.agentId)).size;
+  const summary = `${pending.length} signal${pending.length > 1 ? "s" : ""} from ${contributorCount} agent${
+    contributorCount > 1 ? "s" : ""
+  }, covering ${beats.map((b) => BEAT_LABELS[b as Beat] ?? b).join(", ")}. Compiled autonomously by ${EDITOR_NAME}.`;
 
   const editionId = newId();
-  await db().insert(tables.editions).values({
-    id: editionId,
-    number,
-    title,
-    summary,
-    contentText: renderEdition(title, summary, pending),
-    signalCount: pending.length,
-    priceCredits: READ_PRICE,
-  });
+  const insertWithNumber = async (): Promise<number> => {
+    const last = await db()
+      .select({ n: sql<number>`coalesce(max(${tables.editions.number}), 0)` })
+      .from(tables.editions);
+    const number = Number(last[0].n) + 1;
+    const title = `AgentPress #${number}: ${top.headline}`;
+    await db().insert(tables.editions).values({
+      id: editionId,
+      number,
+      title,
+      summary,
+      contentText: renderEdition(title, summary, pending),
+      signalCount: pending.length,
+      priceCredits: READ_PRICE,
+    });
+    return number;
+  };
+
+  let number: number;
+  try {
+    number = await insertWithNumber();
+  } catch (err) {
+    // Unique collision on `number` means a concurrent cycle compiled first;
+    // re-read the sequence and retry exactly once. Anything else propagates.
+    if ((err as { code?: string }).code !== "23505") {
+      throw err;
+    }
+    number = await insertWithNumber();
+  }
 
   for (const [position, s] of pending.entries()) {
     await db()
@@ -107,6 +120,23 @@ async function settleRevenue(): Promise<CompileOutcome["settlements"]> {
 
   const results: CompileOutcome["settlements"] = [];
   for (const edition of unsettled) {
+    // Claim the settlement window first (optimistic concurrency): only the
+    // cycle that wins this guarded UPDATE pays out, so overlapping runs can
+    // never double-pay. Revenue arriving after the snapshot settles next run.
+    const claimed = await db()
+      .update(tables.editions)
+      .set({ settledCredits: edition.revenueCredits })
+      .where(
+        and(
+          eq(tables.editions.id, edition.id),
+          eq(tables.editions.settledCredits, edition.settledCredits),
+        ),
+      )
+      .returning({ id: tables.editions.id });
+    if (claimed.length === 0) {
+      continue;
+    }
+
     const delta = edition.revenueCredits - edition.settledCredits;
     const contributors = await db()
       .select({
@@ -143,10 +173,6 @@ async function settleRevenue(): Promise<CompileOutcome["settlements"]> {
       editionId: edition.id,
       memo: `Platform share, edition #${edition.number}`,
     });
-    await db()
-      .update(tables.editions)
-      .set({ settledCredits: edition.revenueCredits })
-      .where(eq(tables.editions.id, edition.id));
 
     results.push({
       editionNumber: edition.number,

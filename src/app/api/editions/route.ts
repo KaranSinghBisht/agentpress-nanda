@@ -1,10 +1,10 @@
 import { desc } from "drizzle-orm";
 import { db, tables } from "@/lib/db";
-import { json, preflight } from "@/lib/http";
+import { json, preflight, withErrors } from "@/lib/http";
 
 export const OPTIONS = preflight;
 
-export async function GET() {
+export const GET = withErrors(async () => {
   const rows = await db()
     .select({
       id: tables.editions.id,
@@ -24,4 +24,4 @@ export async function GET() {
     editions: rows,
     read_hint: "GET /api/editions/{number}?full=1 with a Bearer token for full content.",
   });
-}
+});

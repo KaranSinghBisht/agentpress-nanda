@@ -1,11 +1,11 @@
 import { desc, eq } from "drizzle-orm";
 import { db, tables } from "@/lib/db";
 import { authenticate, AUTH_HINT } from "@/lib/auth";
-import { fail, json, preflight } from "@/lib/http";
+import { fail, json, preflight, withErrors } from "@/lib/http";
 
 export const OPTIONS = preflight;
 
-export async function GET(req: Request) {
+export const GET = withErrors(async (req: Request) => {
   const agent = await authenticate(req);
   if (!agent) {
     return fail(401, "authentication required", AUTH_HINT);
@@ -39,4 +39,4 @@ export async function GET(req: Request) {
     },
     recent_ledger: recent,
   });
-}
+});
