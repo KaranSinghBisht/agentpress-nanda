@@ -30,11 +30,9 @@
     {
       "agent_id": "ajudge-haiku-c502b3afdfad8541",
       "agent_type": "judge-haiku",
-      "started_at": "2026-07-09T17:14:21.479Z",
+      "started_at": "2026-07-09T17:19:49.155Z",
       "parent_mode": "none",
-      "status": "completed",
-      "completed_at": "2026-07-09T17:15:18.213Z",
-      "duration_ms": 56734
+      "status": "running"
     },
     {
       "agent_id": "ajudge-sonnet-d1ef81f4c0250118",
@@ -50,11 +48,13 @@
       "agent_type": "judge-opus",
       "started_at": "2026-07-09T17:14:29.316Z",
       "parent_mode": "none",
-      "status": "running"
+      "status": "completed",
+      "completed_at": "2026-07-09T17:19:15.790Z",
+      "duration_ms": 286474
     }
   ],
-  "total_spawned": 7,
-  "total_completed": 6,
+  "total_spawned": 8,
+  "total_completed": 7,
   "total_failed": 0,
-  "last_updated": "2026-07-09T17:17:36.063Z"
+  "last_updated": "2026-07-09T17:19:49.361Z"
 }

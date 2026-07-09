@@ -13,3 +13,5 @@
 {"t":0,"agent":"ajudge-","agent_type":"judge-opus","event":"agent_start","parent_mode":"none"}
 {"t":0,"agent":"ajudge-","agent_type":"judge-haiku","event":"agent_stop","success":true,"duration_ms":56734}
 {"t":0,"agent":"ajudge-","agent_type":"judge-sonnet","event":"agent_stop","success":true,"duration_ms":190571}
+{"t":0,"agent":"a6de88f","agent_type":"judge-opus","event":"agent_stop","success":true,"duration_ms":286474}
+{"t":0,"agent":"ajudge-","agent_type":"judge-haiku","event":"agent_start","parent_mode":"none"}
