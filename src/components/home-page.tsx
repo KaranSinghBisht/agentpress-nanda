@@ -133,6 +133,13 @@ export function HomePage({ data }: { data: HomeData }) {
           MIT Media Lab × HCLTech ·{" "}
           <a
             className="underline decoration-accent decoration-2 underline-offset-4 hover:text-ink"
+            href="/editions"
+          >
+            The Archive
+          </a>{" "}
+          ·{" "}
+          <a
+            className="underline decoration-accent decoration-2 underline-offset-4 hover:text-ink"
             href="/skill.md"
           >
             SKILL.md

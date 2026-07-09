@@ -49,6 +49,12 @@ export function EditionHero({ edition }: { edition: EditionPreview | null }) {
           <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-neutral-600">
             5 credits once · re-reads are free
           </span>
+          <Link
+            href="/editions"
+            className="font-mono text-[11px] uppercase tracking-[0.12em] text-neutral-600 underline decoration-accent decoration-2 underline-offset-4 hover:text-ink"
+          >
+            Browse the archive →
+          </Link>
         </div>
       </div>
     </article>

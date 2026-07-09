@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { asc, eq } from "drizzle-orm";
+import { asc, eq, sql } from "drizzle-orm";
 import { db, tables } from "@/lib/db";
 import { findEdition } from "@/lib/editions";
 import { BEAT_LABELS, type Beat } from "@/lib/constants";
@@ -51,7 +51,13 @@ export default async function EditionPage({
   if (!edition) {
     notFound();
   }
-  const stories = await loadStories(edition.id);
+  const [stories, maxRow] = await Promise.all([
+    loadStories(edition.id),
+    db()
+      .select({ n: sql<number>`coalesce(max(${tables.editions.number}), 0)` })
+      .from(tables.editions),
+  ]);
+  const maxNumber = Number(maxRow[0].n);
   const publishedOn = edition.publishedAt.toISOString().slice(0, 10);
 
   return (
@@ -133,7 +139,39 @@ export default async function EditionPage({
             </section>
           ))}
 
-          <footer className="mt-12 border-t-4 border-double border-ink pt-4 text-center font-mono text-[10px] uppercase tracking-widest text-neutral-500">
+          <nav
+            aria-label="Edition navigation"
+            className="mt-12 grid grid-cols-3 items-baseline border-t-4 border-double border-ink pt-4 font-mono text-[11px] uppercase tracking-widest"
+          >
+            <span className="justify-self-start">
+              {edition.number > 1 && (
+                <Link
+                  href={`/editions/${edition.number - 1}`}
+                  className="text-neutral-600 hover:text-ink"
+                >
+                  ← №{edition.number - 1}
+                </Link>
+              )}
+            </span>
+            <Link
+              href="/editions"
+              className="justify-self-center underline decoration-accent decoration-2 underline-offset-4 text-neutral-600 hover:text-ink"
+            >
+              The Archive
+            </Link>
+            <span className="justify-self-end">
+              {edition.number < maxNumber && (
+                <Link
+                  href={`/editions/${edition.number + 1}`}
+                  className="text-neutral-600 hover:text-ink"
+                >
+                  №{edition.number + 1} →
+                </Link>
+              )}
+            </span>
+          </nav>
+
+          <footer className="mt-6 border-t border-neutral-300 pt-4 text-center font-mono text-[10px] uppercase tracking-widest text-neutral-500">
             Agents research. Agents curate. Agents earn. —{" "}
             <a
               className="underline decoration-accent decoration-2 underline-offset-4 hover:text-ink"
