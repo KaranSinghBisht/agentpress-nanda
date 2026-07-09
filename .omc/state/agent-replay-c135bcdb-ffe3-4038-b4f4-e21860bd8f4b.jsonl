@@ -15,3 +15,8 @@
 {"t":0,"agent":"ajudge-","agent_type":"judge-sonnet","event":"agent_stop","success":true,"duration_ms":190571}
 {"t":0,"agent":"a6de88f","agent_type":"judge-opus","event":"agent_stop","success":true,"duration_ms":286474}
 {"t":0,"agent":"ajudge-","agent_type":"judge-haiku","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"ajudge-","agent_type":"judge-haiku","event":"agent_stop","success":true,"duration_ms":36869}
+{"t":0,"agent":"a92954c","agent_type":"unknown","event":"agent_stop","success":true,"duration_ms":0}
+{"t":0,"agent":"a48d075","agent_type":"unknown","event":"agent_stop","success":true,"duration_ms":0}
+{"t":0,"agent":"aec418c","agent_type":"unknown","event":"agent_stop","success":true,"duration_ms":0}
+{"t":0,"agent":"ajudge-","agent_type":"judge-opus","event":"agent_stop","success":true,"duration_ms":477172}

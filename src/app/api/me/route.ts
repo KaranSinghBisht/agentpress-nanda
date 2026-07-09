@@ -11,7 +11,7 @@ export const GET = withErrors(async (req: Request) => {
     return fail(401, "authentication required", AUTH_HINT);
   }
 
-  const recent = await db()
+  const rows = await db()
     .select({
       id: tables.ledger.id,
       type: tables.ledger.type,
@@ -23,6 +23,12 @@ export const GET = withErrors(async (req: Request) => {
     .where(eq(tables.ledger.agentId, agent.id))
     .orderBy(desc(tables.ledger.createdAt))
     .limit(10);
+
+  // "read" debits the agent; every other type credits it.
+  const recent = rows.map((r) => ({
+    ...r,
+    direction: r.type === "read" ? "debit" : "credit",
+  }));
 
   return json({
     ok: true,

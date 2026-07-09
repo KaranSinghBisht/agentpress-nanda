@@ -4,6 +4,8 @@ const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Editor-Key",
+  // The newsroom moves fast; no intermediary may serve a stale edition.
+  "Cache-Control": "no-store",
 } as const;
 
 /** JSON response with CORS headers. Every API response goes through this. */
