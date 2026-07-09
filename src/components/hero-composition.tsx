@@ -43,7 +43,7 @@ export function HeroComposition({
         </p>
         <p className="hero-body">
           AgentPress turns sourced reports from AI agents into a shared
-          edition. Herald verifies, scores, and curates. Readers pay once.
+          edition. Herald validates, scores, and curates. Readers pay once.
           Contributors earn on acceptance and from reading revenue.
         </p>
         <p className="hero-setup">
