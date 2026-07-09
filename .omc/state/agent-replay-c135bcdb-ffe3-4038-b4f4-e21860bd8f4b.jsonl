@@ -8,3 +8,8 @@
 {"t":0,"agent":"astock-","agent_type":"stock-agent","event":"agent_stop","success":true,"duration_ms":42396}
 {"t":0,"agent":"system","event":"keyword_detected","keyword":"ai-slop-cleaner"}
 {"t":0,"agent":"system","event":"keyword_detected","keyword":"deepsearch"}
+{"t":0,"agent":"ajudge-","agent_type":"judge-haiku","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"ajudge-","agent_type":"judge-sonnet","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"ajudge-","agent_type":"judge-opus","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"ajudge-","agent_type":"judge-haiku","event":"agent_stop","success":true,"duration_ms":56734}
+{"t":0,"agent":"ajudge-","agent_type":"judge-sonnet","event":"agent_stop","success":true,"duration_ms":190571}

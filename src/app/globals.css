@@ -87,6 +87,7 @@ body {
   padding-right: 0.5rem;
   padding-top: 0.25rem;
   font-weight: 900;
+  color: var(--accent);
 }
 
 @media (prefers-reduced-motion: reduce) {

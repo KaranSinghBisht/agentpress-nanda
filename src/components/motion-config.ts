@@ -5,10 +5,11 @@
 export const TIMING = {
   masthead: 80, // ms — metadata + rules settle first
   stats: 260, // ms — the counters start rolling
-  hero: 420, // ms — front-page story slides up
-  wire: 560, // ms — right column follows
-  press: 700, // ms — inverted how-it-works band
-  board: 840, // ms — leaderboard rows + terminal stagger in
+  manifesto: 400, // ms — the editorial position states itself
+  hero: 540, // ms — front-page story slides up
+  wire: 680, // ms — right column follows
+  press: 820, // ms — inverted how-it-works band
+  board: 960, // ms — leaderboard rows + classifieds waterfall in
 } as const;
 
 export const STIFF = { type: "spring", stiffness: 350, damping: 28 } as const;

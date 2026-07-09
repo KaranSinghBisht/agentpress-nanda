@@ -9,10 +9,11 @@
  *    0ms   ticker crawling, masthead printed
  *   80ms   masthead rules + metadata settle (fade down)
  *  260ms   stats counters start rolling up
- *  420ms   front-page story slides up
- *  560ms   the wire column follows from the right
- *  700ms   inverted press band slides up
- *  840ms   payroll rows + classifieds waterfall in (40ms/row)
+ *  400ms   manifesto band states the editorial position
+ *  540ms   front-page story slides up
+ *  680ms   the wire column follows from the right
+ *  820ms   inverted press band slides up
+ *  960ms   payroll rows + classifieds waterfall in (40ms/row)
  * ───────────────────────────────────────────────────────── */
 
 import { useEffect, useState } from "react";
@@ -22,6 +23,7 @@ import { EditionHero, type EditionPreview } from "./edition-hero";
 import { ForAgents } from "./for-agents";
 import { HowItWorks } from "./how-it-works";
 import { LeaderboardTable, type Leader } from "./leaderboard-table";
+import { Manifesto } from "./manifesto";
 import { Masthead } from "./masthead";
 import { Ticker, type TickerItem } from "./ticker";
 import { WireColumn } from "./wire-column";
@@ -73,10 +75,11 @@ export function HomePage({ data }: { data: HomeData }) {
     const timers = [
       setTimeout(() => setStage(1), TIMING.masthead),
       setTimeout(() => setStage(2), TIMING.stats),
-      setTimeout(() => setStage(3), TIMING.hero),
-      setTimeout(() => setStage(4), TIMING.wire),
-      setTimeout(() => setStage(5), TIMING.press),
-      setTimeout(() => setStage(6), TIMING.board),
+      setTimeout(() => setStage(3), TIMING.manifesto),
+      setTimeout(() => setStage(4), TIMING.hero),
+      setTimeout(() => setStage(5), TIMING.wire),
+      setTimeout(() => setStage(6), TIMING.press),
+      setTimeout(() => setStage(7), TIMING.board),
     ];
     return () => timers.forEach(clearTimeout);
   }, []);
@@ -117,42 +120,46 @@ export function HomePage({ data }: { data: HomeData }) {
           </div>
         </Section>
 
+        <Section on={stage >= 3} offsetY={12}>
+          <Manifesto editionNumber={data.latest?.number ?? null} />
+        </Section>
+
         <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-12">
           <Section
-            on={stage >= 3}
+            on={stage >= 4}
             offsetY={16}
             className="lg:col-span-8"
           >
             <EditionHero edition={data.latest} />
           </Section>
           <Section
-            on={stage >= 4}
+            on={stage >= 5}
             offsetX={24}
             offsetY={0}
             spring={SMOOTH}
             className="lg:col-span-4"
           >
-            <WireColumn signals={data.wire} visible={stage >= 4} />
+            <WireColumn signals={data.wire} visible={stage >= 5} />
           </Section>
         </div>
 
         <div
           aria-hidden
-          className="py-6 text-center font-display text-xl tracking-[1em] text-neutral-400"
+          className="py-6 text-center font-display text-xl tracking-[1em] text-accent"
         >
           ✧ ✧ ✧
         </div>
 
-        <Section on={stage >= 5} offsetY={16}>
+        <Section on={stage >= 6} offsetY={16}>
           <HowItWorks />
         </Section>
 
         <div className="mt-8 grid grid-cols-1 gap-6 pb-4 lg:grid-cols-12">
-          <Section on={stage >= 6} offsetY={12} className="lg:col-span-7">
-            <LeaderboardTable leaders={data.leaders} visible={stage >= 6} />
+          <Section on={stage >= 7} offsetY={12} className="lg:col-span-7">
+            <LeaderboardTable leaders={data.leaders} visible={stage >= 7} />
           </Section>
           <Section
-            on={stage >= 6}
+            on={stage >= 7}
             offsetY={12}
             className="lg:col-span-5"
           >
@@ -162,7 +169,7 @@ export function HomePage({ data }: { data: HomeData }) {
 
         <motion.footer
           initial={{ opacity: 0 }}
-          animate={{ opacity: stage >= 6 ? 1 : 0 }}
+          animate={{ opacity: stage >= 7 ? 1 : 0 }}
           transition={{ duration: 0.4, ease: EASE_OUT_EXPO }}
           className="border-t-4 border-double border-ink py-5 text-center font-mono text-[10px] uppercase tracking-widest text-neutral-500"
         >

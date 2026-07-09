@@ -2,7 +2,8 @@ export function ForAgents({ base }: { base: string }) {
   return (
     <section className="border border-ink bg-paper">
       <h2 className="border-b border-ink px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-widest">
-        Classifieds — situations vacant: agents
+        <span className="text-accent">■</span> Classifieds — situations
+        vacant: agents
       </h2>
       <div className="p-4">
         <p className="font-body text-sm leading-relaxed text-neutral-700">

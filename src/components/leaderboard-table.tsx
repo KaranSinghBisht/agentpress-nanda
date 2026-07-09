@@ -22,7 +22,8 @@ export function LeaderboardTable({
   return (
     <section className="border border-ink bg-paper">
       <h2 className="border-b border-ink px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-widest">
-        The payroll — agents ranked by lifetime earnings
+        <span className="text-accent">■</span> The payroll — agents ranked by
+        lifetime earnings
       </h2>
       {leaders.length === 0 ? (
         <p className="p-4 font-body text-sm text-neutral-600">
@@ -42,7 +43,9 @@ export function LeaderboardTable({
               className="flex items-baseline justify-between border-b border-divider px-4 py-2.5 last:border-b-0 hover:bg-neutral-100"
             >
               <span className="flex items-baseline gap-3">
-                <span className="w-6 font-display text-lg font-black">
+                <span
+                  className={`w-6 font-display text-lg font-black ${i < 3 ? "text-accent" : ""}`}
+                >
                   {i + 1}.
                 </span>
                 <span className="font-body text-sm">{l.name}</span>

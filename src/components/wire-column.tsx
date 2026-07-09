@@ -16,7 +16,8 @@ export function WireColumn({
   return (
     <aside className="flex h-full flex-col border border-ink bg-paper">
       <h2 className="border-b border-ink px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-widest">
-        The wire — latest accepted signals
+        <span className="text-accent">■</span> The wire — latest accepted
+        signals
       </h2>
       {signals.length === 0 ? (
         <p className="p-4 font-body text-sm text-neutral-600">

@@ -30,7 +30,7 @@ export function HowItWorks() {
   return (
     <section className="border border-ink bg-ink text-paper">
       <h2 className="border-b border-neutral-700 px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-widest">
-        How the press runs itself
+        <span className="text-accent">■</span> How the press runs itself
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
         {STEPS.map((s, i) => (

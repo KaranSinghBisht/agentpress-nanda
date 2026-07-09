@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-09T16:44:20.968Z",
+  "updatedAt": "2026-07-09T17:17:35.842Z",
   "missions": [
     {
       "id": "session:c135bcdb-ffe3-4038-b4f4-e21860bd8f4b:none",
@@ -7,15 +7,15 @@
       "name": "none",
       "objective": "Session mission",
       "createdAt": "2026-07-09T16:15:26.902Z",
-      "updatedAt": "2026-07-09T16:44:20.968Z",
-      "status": "done",
-      "workerCount": 3,
+      "updatedAt": "2026-07-09T17:17:35.842Z",
+      "status": "running",
+      "workerCount": 6,
       "taskCounts": {
-        "total": 3,
+        "total": 6,
         "pending": 0,
         "blocked": 0,
-        "inProgress": 0,
-        "completed": 3,
+        "inProgress": 1,
+        "completed": 5,
         "failed": 0
       },
       "agents": [
@@ -48,40 +48,78 @@
           "latestUpdate": "completed",
           "completedSummary": null,
           "updatedAt": "2026-07-09T16:44:20.968Z"
+        },
+        {
+          "name": "judge-haiku:ajudge-",
+          "role": "judge-haiku",
+          "ownership": "ajudge-haiku-c502b3afdfad8541",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-07-09T17:15:18.213Z"
+        },
+        {
+          "name": "judge-sonnet:ajudge-",
+          "role": "judge-sonnet",
+          "ownership": "ajudge-sonnet-d1ef81f4c0250118",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-07-09T17:17:35.842Z"
+        },
+        {
+          "name": "judge-opus:ajudge-",
+          "role": "judge-opus",
+          "ownership": "ajudge-opus-a03deb0a5b8d6e5e",
+          "status": "running",
+          "currentStep": null,
+          "latestUpdate": null,
+          "completedSummary": null,
+          "updatedAt": "2026-07-09T17:14:29.316Z"
         }
       ],
       "timeline": [
         {
-          "id": "session-stop:aphase2-reviewer-e658390bc9c14099:2026-07-09T16:26:05.036Z",
-          "at": "2026-07-09T16:26:05.036Z",
-          "kind": "completion",
-          "agent": "phase2-reviewer:aphase2",
-          "detail": "completed",
-          "sourceKey": "session-stop:aphase2-reviewer-e658390bc9c14099"
-        },
-        {
-          "id": "session-stop:aphase1-judge-84366a102c33c02e:2026-07-09T16:26:37.977Z",
-          "at": "2026-07-09T16:26:37.977Z",
-          "kind": "completion",
-          "agent": "phase1-judge:aphase1",
-          "detail": "completed",
-          "sourceKey": "session-stop:aphase1-judge-84366a102c33c02e"
-        },
-        {
-          "id": "session-start:astock-agent-10a1535be3649a83:2026-07-09T16:43:38.572Z",
-          "at": "2026-07-09T16:43:38.572Z",
+          "id": "session-start:ajudge-haiku-c502b3afdfad8541:2026-07-09T17:14:21.479Z",
+          "at": "2026-07-09T17:14:21.479Z",
           "kind": "update",
-          "agent": "stock-agent:astock-",
-          "detail": "started stock-agent:astock-",
-          "sourceKey": "session-start:astock-agent-10a1535be3649a83"
+          "agent": "judge-haiku:ajudge-",
+          "detail": "started judge-haiku:ajudge-",
+          "sourceKey": "session-start:ajudge-haiku-c502b3afdfad8541"
         },
         {
-          "id": "session-stop:astock-agent-10a1535be3649a83:2026-07-09T16:44:20.968Z",
-          "at": "2026-07-09T16:44:20.968Z",
+          "id": "session-start:ajudge-sonnet-d1ef81f4c0250118:2026-07-09T17:14:25.271Z",
+          "at": "2026-07-09T17:14:25.271Z",
+          "kind": "update",
+          "agent": "judge-sonnet:ajudge-",
+          "detail": "started judge-sonnet:ajudge-",
+          "sourceKey": "session-start:ajudge-sonnet-d1ef81f4c0250118"
+        },
+        {
+          "id": "session-start:ajudge-opus-a03deb0a5b8d6e5e:2026-07-09T17:14:29.316Z",
+          "at": "2026-07-09T17:14:29.316Z",
+          "kind": "update",
+          "agent": "judge-opus:ajudge-",
+          "detail": "started judge-opus:ajudge-",
+          "sourceKey": "session-start:ajudge-opus-a03deb0a5b8d6e5e"
+        },
+        {
+          "id": "session-stop:ajudge-haiku-c502b3afdfad8541:2026-07-09T17:15:18.213Z",
+          "at": "2026-07-09T17:15:18.213Z",
           "kind": "completion",
-          "agent": "stock-agent:astock-",
+          "agent": "judge-haiku:ajudge-",
           "detail": "completed",
-          "sourceKey": "session-stop:astock-agent-10a1535be3649a83"
+          "sourceKey": "session-stop:ajudge-haiku-c502b3afdfad8541"
+        },
+        {
+          "id": "session-stop:ajudge-sonnet-d1ef81f4c0250118:2026-07-09T17:17:35.842Z",
+          "at": "2026-07-09T17:17:35.842Z",
+          "kind": "completion",
+          "agent": "judge-sonnet:ajudge-",
+          "detail": "completed",
+          "sourceKey": "session-stop:ajudge-sonnet-d1ef81f4c0250118"
         }
       ]
     }
