@@ -6,3 +6,5 @@
 {"t":0,"agent":"aphase1","agent_type":"phase1-judge","event":"agent_stop","success":true,"duration_ms":671075}
 {"t":0,"agent":"astock-","agent_type":"stock-agent","event":"agent_start","parent_mode":"none"}
 {"t":0,"agent":"astock-","agent_type":"stock-agent","event":"agent_stop","success":true,"duration_ms":42396}
+{"t":0,"agent":"system","event":"keyword_detected","keyword":"ai-slop-cleaner"}
+{"t":0,"agent":"system","event":"keyword_detected","keyword":"deepsearch"}
