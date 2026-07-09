@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"vercel link --yes --project agentpress-nanda 2>&1 | tail -5 && cat .vercel/project.json 2>/dev/null\",\"description\":\"Link Vercel project with explicit name\"}",
+  "error": "Exit code 1\n      \"when\": \"Run this command with scope (no link)\"\n    }\n  ],\n  \"hint\": \"Run one of the commands in next[] to complete without prompting.\"\n}",
+  "timestamp": "2026-07-09T15:43:25.980Z",
+  "retry_count": 1
+}
