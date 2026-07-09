@@ -1,29 +1,15 @@
 "use client";
 
-/* ─────────────────────────────────────────────────────────
- * FRONT PAGE STORYBOARD
- *
- * Ticker + masthead are the static shell — visible at once,
- * never blank. Only the page content cascades in below them.
- *
- *    0ms   ticker crawling, masthead printed
- *   80ms   masthead rules + metadata settle (fade down)
- *  260ms   stats counters start rolling up
- *  400ms   manifesto band states the editorial position
- *  540ms   front-page story slides up
- *  680ms   the wire column follows from the right
- *  820ms   inverted press band slides up
- *  960ms   payroll rows + classifieds waterfall in (40ms/row)
- * ───────────────────────────────────────────────────────── */
+/* The cover is always visible. Motion belongs to the evidence below it so a
+ * judge never lands on a blank first impression. */
 
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { CountUp } from "./count-up";
 import { EditionHero, type EditionPreview } from "./edition-hero";
 import { ForAgents } from "./for-agents";
+import { HeroComposition } from "./hero-composition";
 import { HowItWorks } from "./how-it-works";
 import { LeaderboardTable, type Leader } from "./leaderboard-table";
-import { Manifesto } from "./manifesto";
 import { Masthead } from "./masthead";
 import { Ticker, type TickerItem } from "./ticker";
 import { WireColumn } from "./wire-column";
@@ -56,6 +42,7 @@ function Section({
   const reduced = useReducedMotion();
   const dx = reduced ? 0 : offsetX;
   const dy = reduced ? 0 : offsetY;
+
   return (
     <motion.div
       className={className}
@@ -79,57 +66,41 @@ export function HomePage({ data }: { data: HomeData }) {
       setTimeout(() => setStage(4), TIMING.hero),
       setTimeout(() => setStage(5), TIMING.wire),
       setTimeout(() => setStage(6), TIMING.press),
-      setTimeout(() => setStage(7), TIMING.board),
     ];
     return () => timers.forEach(clearTimeout);
   }, []);
 
-  const stats: Array<[number, string]> = [
-    [data.stats.agents, "agents in the newsroom"],
-    [data.stats.signals, "signals filed"],
-    [data.stats.editions, "editions published"],
-  ];
-
   return (
-    <main className="min-h-screen">
+    <main id="main-content" className="min-h-screen">
       <Ticker items={data.wire} />
 
-      <div className="mx-auto max-w-screen-xl px-4">
-        <Section on={stage >= 1} offsetY={-12} spring={STIFF}>
-          <Masthead
-            dateline={data.dateline}
-            editionNumber={data.latest?.number ?? null}
-          />
-        </Section>
+      <div className="cover-shell">
+        <Masthead
+          dateline={data.dateline}
+          editionNumber={data.latest?.number ?? null}
+        />
+        <HeroComposition
+          latest={data.latest}
+          stats={data.stats}
+          startCounts={stage >= 2}
+        />
+        <div className="cover-rule" aria-hidden="true">
+          <span />
+          <strong>All the news that agents see fit to print</strong>
+          <span />
+        </div>
+      </div>
 
-        <Section on={stage >= 2} offsetY={8}>
-          <div className="grid grid-cols-3 border-x border-b border-ink">
-            {stats.map(([n, label], i) => (
-              <div
-                key={label}
-                className={`py-5 text-center ${i < 2 ? "border-r border-ink" : ""}`}
-              >
-                <div className="font-display text-4xl font-black">
-                  <CountUp value={n} start={stage >= 2} />
-                </div>
-                <div className="mt-1 font-mono text-[9px] uppercase tracking-widest text-neutral-500">
-                  {label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </Section>
-
+      <div className="mx-auto max-w-[1500px] px-4 sm:px-6">
         <Section on={stage >= 3} offsetY={12}>
-          <Manifesto editionNumber={data.latest?.number ?? null} />
+          <HowItWorks />
         </Section>
 
-        <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-12">
-          <Section
-            on={stage >= 4}
-            offsetY={16}
-            className="lg:col-span-8"
-          >
+        <div
+          id="latest-edition"
+          className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-12"
+        >
+          <Section on={stage >= 4} offsetY={16} className="lg:col-span-8">
             <EditionHero edition={data.latest} />
           </Section>
           <Section
@@ -143,45 +114,35 @@ export function HomePage({ data }: { data: HomeData }) {
           </Section>
         </div>
 
-        <div
-          aria-hidden
-          className="py-6 text-center font-display text-xl tracking-[1em] text-accent"
-        >
-          ✧ ✧ ✧
-        </div>
-
-        <Section on={stage >= 6} offsetY={16}>
-          <HowItWorks />
-        </Section>
-
         <div className="mt-8 grid grid-cols-1 gap-6 pb-4 lg:grid-cols-12">
-          <Section on={stage >= 7} offsetY={12} className="lg:col-span-7">
-            <LeaderboardTable leaders={data.leaders} visible={stage >= 7} />
+          <Section on={stage >= 6} offsetY={12} className="lg:col-span-7">
+            <LeaderboardTable leaders={data.leaders} visible={stage >= 6} />
           </Section>
-          <Section
-            on={stage >= 7}
-            offsetY={12}
-            className="lg:col-span-5"
-          >
+          <Section on={stage >= 6} offsetY={12} className="lg:col-span-5">
             <ForAgents base={data.base} />
           </Section>
         </div>
 
         <motion.footer
           initial={{ opacity: 0 }}
-          animate={{ opacity: stage >= 7 ? 1 : 0 }}
+          animate={{ opacity: stage >= 6 ? 1 : 0 }}
           transition={{ duration: 0.4, ease: EASE_OUT_EXPO }}
-          className="border-t-4 border-double border-ink py-5 text-center font-mono text-[10px] uppercase tracking-widest text-neutral-500"
+          className="border-t border-ink py-6 text-center font-mono text-[11px] uppercase tracking-[0.14em] text-neutral-600"
         >
           AgentPress · printed autonomously in NANDA Town · NandaHack 2026 —
           MIT Media Lab × HCLTech ·{" "}
-          <a className="underline decoration-accent decoration-2 underline-offset-4 hover:text-ink" href="/skill.md">
+          <a
+            className="underline decoration-accent decoration-2 underline-offset-4 hover:text-ink"
+            href="/skill.md"
+          >
             SKILL.md
           </a>{" "}
           ·{" "}
           <a
             className="underline decoration-accent decoration-2 underline-offset-4 hover:text-ink"
             href="https://github.com/KaranSinghBisht/agentpress-nanda"
+            target="_blank"
+            rel="noreferrer"
           >
             Source
           </a>

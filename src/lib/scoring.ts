@@ -61,15 +61,21 @@ function similarity(a: Set<string>, b: Set<string>): number {
 
 function scoreSources(sources: string[]): { count: number; quality: number } {
   const count = sources.length >= 3 ? 20 : sources.length === 2 ? 15 : sources.length === 1 ? 10 : 0;
-  const reputable = sources.filter((url) => {
+  // Distinct reputable domains only — three URLs from one domain count once,
+  // exactly as the published rubric promises.
+  const domains = new Set<string>();
+  for (const url of sources) {
     try {
       const host = new URL(url).hostname.replace(/^www\./, "");
-      return REPUTABLE_DOMAINS.some((d) => host === d || host.endsWith(`.${d}`));
+      const match = REPUTABLE_DOMAINS.find((d) => host === d || host.endsWith(`.${d}`));
+      if (match) {
+        domains.add(match);
+      }
     } catch {
-      return false;
+      // invalid URL contributes nothing to quality
     }
-  });
-  return { count, quality: Math.min(15, reputable.length * 5) };
+  }
+  return { count, quality: Math.min(15, domains.size * 5) };
 }
 
 /**

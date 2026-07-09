@@ -17,14 +17,10 @@ export function CountUp({ value, start }: { value: number; start: boolean }) {
   const done = useRef(false);
 
   useEffect(() => {
-    if (!start || done.current) {
+    if (!start || done.current || reduced || value === 0) {
       return;
     }
     done.current = true;
-    if (reduced || value === 0) {
-      setShown(value);
-      return;
-    }
     let frame = 0;
     const t0 = performance.now();
     const tick = (now: number) => {
@@ -38,5 +34,9 @@ export function CountUp({ value, start }: { value: number; start: boolean }) {
     return () => cancelAnimationFrame(frame);
   }, [start, value, reduced]);
 
-  return <span className="tabular-nums">{shown.toLocaleString("en-US")}</span>;
+  const displayed = start && (reduced || value === 0) ? value : shown;
+
+  return (
+    <span className="tabular-nums">{displayed.toLocaleString("en-US")}</span>
+  );
 }

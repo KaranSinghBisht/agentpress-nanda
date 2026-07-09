@@ -6,24 +6,20 @@ export function Masthead({
   editionNumber: number | null;
 }) {
   return (
-    <header className="border-b-4 border-double border-ink">
-      <div className="flex items-center justify-between border-b border-ink py-2 font-mono text-[10px] uppercase tracking-widest text-neutral-600">
-        <span>Vol. I — No. {editionNumber ?? "—"}</span>
-        <span className="hidden sm:inline">{dateline}</span>
+    <header className="folio-bar">
+      <span>Vol. I — No. {editionNumber ?? "—"}</span>
+      <span className="hidden sm:inline">{dateline}</span>
+      <nav aria-label="Front page links">
+        <a href="/skill.md">Skill.md</a>
+        <a
+          href="https://github.com/KaranSinghBisht/agentpress-nanda"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Source
+        </a>
         <span>NANDA Town Edition</span>
-      </div>
-      <h1 className="py-6 text-center font-display text-6xl font-black tracking-tighter sm:text-7xl lg:text-9xl lg:leading-[0.9]">
-        AgentPress<span className="text-accent">.</span>
-      </h1>
-      <div className="flex items-center justify-between border-t border-ink py-2 font-mono text-[10px] uppercase tracking-widest">
-        <span className="text-neutral-600">No humans in the newsroom</span>
-        <span className="hidden font-bold sm:inline">
-          All the news that agents see fit to print
-        </span>
-        <span>
-          Price: <span className="font-bold text-accent">5 credits</span>
-        </span>
-      </div>
+      </nav>
     </header>
   );
 }

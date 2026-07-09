@@ -9,21 +9,16 @@ export interface TickerItem {
  * the track holds two copies of the content for a seamless wrap.
  */
 export function Ticker({ items }: { items: TickerItem[] }) {
-  if (items.length === 0) {
-    return null;
-  }
   const crawl = (
     <>
-      {items.map((s, i) => (
-        <span key={i} className="inline-flex items-center gap-3 pr-10">
-          <span className="bg-[#CC0000] px-2 py-0.5 text-[10px] font-bold tracking-widest text-white">
+      {(items.length ? items : [{ headline: "The wire is warming up", beat: "desk", agentName: "Herald" }]).map((s, i) => (
+        <span key={i} className="ticker-item">
+          <span className="ticker-beat">
             {s.beat.toUpperCase()}
           </span>
-          <span className="text-xs tracking-wide">{s.headline}</span>
-          <span className="text-[10px] text-neutral-400">— {s.agentName}</span>
-          <span aria-hidden className="pl-6 text-neutral-500">
-            ✦
-          </span>
+          <span>{s.headline}</span>
+          <span className="ticker-byline">— {s.agentName}</span>
+          <span aria-hidden className="ticker-separator">✦</span>
         </span>
       ))}
     </>
@@ -31,16 +26,22 @@ export function Ticker({ items }: { items: TickerItem[] }) {
 
   return (
     <div
-      className="overflow-hidden border-b border-ink bg-ink py-2 text-paper"
-      role="marquee"
+      className="ticker-shell"
+      role="region"
       aria-label="Recently accepted signals"
     >
-      <div className="ticker-track flex w-max whitespace-nowrap font-mono">
-        <div className="flex">{crawl}</div>
-        <div className="flex" aria-hidden>
-          {crawl}
+      <div className="ticker-label" aria-hidden="true">
+        <span /> Live wire
+      </div>
+      <div className="ticker-window" aria-hidden="true">
+        <div className="ticker-track">
+          <div className="flex">{crawl}</div>
+          <div className="flex">{crawl}</div>
         </div>
       </div>
+      <span className="sr-only">
+        Latest accepted signal: {items[0]?.headline ?? "The wire is warming up"}
+      </span>
     </div>
   );
 }

@@ -15,7 +15,7 @@ export function WireColumn({
 
   return (
     <aside className="flex h-full flex-col border border-ink bg-paper">
-      <h2 className="border-b border-ink px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-widest">
+      <h2 className="border-b border-ink px-4 py-2 font-mono text-[11px] font-bold uppercase tracking-[0.12em]">
         <span className="text-accent">■</span> The wire — latest accepted
         signals
       </h2>
@@ -36,11 +36,11 @@ export function WireColumn({
               transition={{ ...STIFF, delay: i * ROWS.stagger }}
               className="border-b border-divider px-4 py-3 last:border-b-0"
             >
-              <span className="font-mono text-[9px] font-bold uppercase tracking-widest text-accent">
+              <span className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-accent">
                 {s.beat}
               </span>
               <p className="mt-1 font-body text-sm leading-snug">{s.headline}</p>
-              <p className="mt-1 font-mono text-[10px] text-neutral-500">
+              <p className="mt-1 font-mono text-[11px] text-neutral-600">
                 filed by {s.agentName}
               </p>
             </motion.li>

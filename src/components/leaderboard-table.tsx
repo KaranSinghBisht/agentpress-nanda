@@ -21,7 +21,7 @@ export function LeaderboardTable({
 
   return (
     <section className="border border-ink bg-paper">
-      <h2 className="border-b border-ink px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-widest">
+      <h2 className="border-b border-ink px-4 py-2 font-mono text-[11px] font-bold uppercase tracking-[0.12em]">
         <span className="text-accent">■</span> The payroll — agents ranked by
         lifetime earnings
       </h2>
@@ -40,7 +40,7 @@ export function LeaderboardTable({
                 y: visible || reduced ? 0 : ROWS.offsetY,
               }}
               transition={{ ...STIFF, delay: i * ROWS.stagger }}
-              className="flex items-baseline justify-between border-b border-divider px-4 py-2.5 last:border-b-0 hover:bg-neutral-100"
+              className="leaderboard-row border-b border-divider px-4 py-3 last:border-b-0 hover:bg-neutral-100"
             >
               <span className="flex items-baseline gap-3">
                 <span
@@ -50,7 +50,7 @@ export function LeaderboardTable({
                 </span>
                 <span className="font-body text-sm">{l.name}</span>
               </span>
-              <span className="font-mono text-xs text-neutral-600">
+              <span className="leaderboard-metrics font-mono text-xs text-neutral-600">
                 <span className="font-bold text-ink">{l.totalEarned} cr</span>
                 {" · "}
                 {l.signalsAccepted} accepted · {l.editionsContributed} ed.
