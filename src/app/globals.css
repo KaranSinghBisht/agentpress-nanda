@@ -414,8 +414,11 @@ button:focus-visible {
   position: absolute;
   z-index: 0;
   top: -4px;
-  left: 33.5%;
-  width: 74%;
+  /* Anchor to the RIGHT edge: the illustration's annotations live on its
+     right side, so that edge must never crop. 33.5% + 66.5% = 100%. */
+  right: 0;
+  left: auto;
+  width: 66.5%;
   max-width: none;
   margin: 0;
 }
@@ -620,8 +623,9 @@ button:focus-visible {
   }
 
   .hero-visual {
-    left: 31%;
-    width: 83%;
+    right: 0;
+    left: auto;
+    width: 69%;
   }
 
   .hero-actions {
