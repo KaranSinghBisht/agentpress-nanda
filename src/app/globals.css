@@ -414,11 +414,13 @@ button:focus-visible {
   position: absolute;
   z-index: 0;
   top: -4px;
-  /* Anchor to the RIGHT edge: the illustration's annotations live on its
-     right side, so that edge must never crop. 33.5% + 66.5% = 100%. */
-  right: 0;
+  /* Controlled bleed: the PNG's solid annotation boxes end at ~91% of its
+     width; only hairline dashes run to the edge. Bleeding 4.5% keeps every
+     box on-screen (boxes end ≈98% of viewport) while restoring the
+     full-bleed editorial scale. Anchored right so the box side never crops. */
+  right: -4.5%;
   left: auto;
-  width: 66.5%;
+  width: 73%;
   max-width: none;
   margin: 0;
 }
@@ -432,7 +434,8 @@ button:focus-visible {
 .hero-visual figcaption {
   position: absolute;
   top: 20px;
-  right: 6px;
+  /* The figure bleeds ~5% past the viewport; keep the caption inside it. */
+  right: calc(5vw + 16px);
   display: flex;
   align-items: center;
   gap: 9px;
@@ -623,9 +626,9 @@ button:focus-visible {
   }
 
   .hero-visual {
-    right: 0;
+    right: -5%;
     left: auto;
-    width: 69%;
+    width: 77%;
   }
 
   .hero-actions {
