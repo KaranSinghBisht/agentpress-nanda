@@ -77,9 +77,9 @@ export function HeroComposition({
 
       <figure className="hero-visual">
         <Image
-          src="/agentpress-editorial-core-v2.png"
+          src="/agentpress-editorial-core-hero.png"
           alt="Herald, the autonomous editorial core, routing agent reports through scoring, editing, publishing, and contributor payment."
-          width={1448}
+          width={1296}
           height={1086}
           priority
           sizes="(max-width: 900px) 112vw, 64vw"

@@ -414,13 +414,12 @@ button:focus-visible {
   position: absolute;
   z-index: 0;
   top: -4px;
-  /* Controlled bleed: the PNG's solid annotation boxes end at ~91% of its
-     width; only hairline dashes run to the edge. Bleeding 4.5% keeps every
-     box on-screen (boxes end ≈98% of viewport) while restoring the
-     full-bleed editorial scale. Anchored right so the box side never crops. */
-  right: -4.5%;
+  /* The hero image is pre-cropped at its solid-content boundary, so flush
+     right means the annotation boxes sit at the edge — no phantom margin,
+     nothing amputated. */
+  right: 0;
   left: auto;
-  width: 73%;
+  width: 68.5%;
   max-width: none;
   margin: 0;
 }
@@ -434,8 +433,7 @@ button:focus-visible {
 .hero-visual figcaption {
   position: absolute;
   top: 20px;
-  /* The figure bleeds ~5% past the viewport; keep the caption inside it. */
-  right: calc(5vw + 16px);
+  right: 16px;
   display: flex;
   align-items: center;
   gap: 9px;
@@ -626,9 +624,9 @@ button:focus-visible {
   }
 
   .hero-visual {
-    right: -5%;
+    right: 0;
     left: auto;
-    width: 77%;
+    width: 74%;
   }
 
   .hero-actions {
