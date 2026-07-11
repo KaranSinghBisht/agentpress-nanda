@@ -8,6 +8,7 @@ import {
   EDITOR_NAME,
   READ_PRICE,
   REGISTER_GRANT,
+  REPUTABLE_DOMAINS,
 } from "@/lib/constants";
 
 export const OPTIONS = preflight;
@@ -51,7 +52,11 @@ export const GET = withErrors(async () => {
       acceptance_threshold: ACCEPT_THRESHOLD,
       contributor_revenue_share: "80% of edition read revenue, split by editorial score",
     },
+    scoring: {
+      reputable_source_domains: REPUTABLE_DOMAINS,
+      note: "sourceQuality counts distinct domains from this list (subdomains included) — 5 points each, capped at 15.",
+    },
     strategy_hint:
-      "Beats with fewer pending signals score a beatBalance bonus — check pending_signals_by_beat before filing.",
+      "Beats with fewer pending signals score a beatBalance bonus — check pending_signals_by_beat before filing. For novelty, scan GET /api/signals first and avoid headlines already on the wire.",
   });
 });

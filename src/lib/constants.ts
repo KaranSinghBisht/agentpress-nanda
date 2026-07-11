@@ -35,7 +35,9 @@ export const BEAT_LABELS: Record<Beat, string> = {
 export const REPUTABLE_DOMAINS = [
   "github.com",
   "arxiv.org",
+  "metr.org",
   "anthropic.com",
+  "claude.com",
   "openai.com",
   "deepmind.google",
   "huggingface.co",
